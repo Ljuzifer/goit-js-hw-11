@@ -46,13 +46,13 @@ const getImages = async value => {
   return imageThumb;
 };
 
-refs.formRef.addEventListener('submit', e => {
+refs.formRef.addEventListener('submit', async e => {
   e.preventDefault();
   handleHideAnime();
 
   refs.galleryRef.innerHTML = '';
   pageCounter = 1;
-  getImages(inputValue)
+  await getImages(inputValue)
     .then(res => {
       const { hits, totalHits } = res.data;
       pagesCount = Math.ceil(totalHits / perPage);
@@ -97,5 +97,5 @@ window.addEventListener(
     ) {
       loadMoreHandler(pageCounter);
     }
-  }, 300)
+  }, 200)
 );
