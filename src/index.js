@@ -8,8 +8,8 @@ import { galleryMarkup } from './js/markup';
 import { refs } from './js/refs';
 import { handleHideAnime } from './js/anime';
 
-BASE_URL = 'https://pixabay.com/api/';
-API_KEY = '38110129-67a9a84d818f0afdbf48a1e7d';
+const BASE_URL = 'https://pixabay.com/api/';
+const API_KEY = '38110129-67a9a84d818f0afdbf48a1e7d';
 
 let pageCounter = 1;
 let pagesCount = 1;
