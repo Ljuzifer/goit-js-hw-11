@@ -6,12 +6,7 @@ import _ from 'lodash';
 
 import { galleryMarkup } from './js/markup';
 import { refs } from './js/refs';
-
-// const getEl = e => document.querySelector(e);
-// const gallery = getEl('.gallery');
-// const form = getEl('#search-form');
-// const formBtn = getEl('#search-form button');
-// const formInput = getEl('#search-form input');
+import { handleHideAnime } from './js/anime';
 
 let pageCounter = 1;
 let pagesCount = 1;
@@ -49,9 +44,7 @@ const getImages = value => {
 
 refs.formRef.addEventListener('submit', e => {
   e.preventDefault();
-
-  const anime = document.querySelector('canvas');
-  anime.style.display = 'none';
+  handleHideAnime();
 
   refs.galleryRef.innerHTML = '';
   pageCounter = 1;

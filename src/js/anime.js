@@ -310,3 +310,8 @@ ctx.lineCap = 'round';
 ctx.lineJoin = 'round';
 
 loop();
+
+export function handleHideAnime() {
+  const anime = document.querySelector('canvas');
+  anime.style.display = 'none';
+}
