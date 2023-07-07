@@ -4,13 +4,14 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
 import _ from 'lodash';
 
-const getEl = el => document.querySelector(el);
+import { galleryMarkup } from './js/markup';
+import { refs } from './js/refs';
 
-const gallery = getEl('.gallery');
-const form = getEl('#search-form');
-const formBtn = getEl('#search-form button');
-const formInput = getEl('#search-form input');
-const loading = getEl('.loading');
+// const getEl = e => document.querySelector(e);
+// const gallery = getEl('.gallery');
+// const form = getEl('#search-form');
+// const formBtn = getEl('#search-form button');
+// const formInput = getEl('#search-form input');
 
 let pageCounter = 1;
 let pagesCount = 1;
@@ -19,16 +20,16 @@ let perPage = 40;
 
 const lightBox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
-  captionDelay: 250,
+  captionDelay: 200,
 });
 
-formInput.addEventListener('input', event => {
-  inputValue = event.target.value;
+refs.formInputRef.addEventListener('input', e => {
+  inputValue = e.target.value;
   if (inputValue.length > 0) {
-    formBtn.removeAttribute('disabled');
-    formBtn.style.cursor = 'pointer';
+    refs.formBtnRef.removeAttribute('disabled');
+    refs.formBtnRef.style.cursor = 'pointer';
   } else {
-    formBtn.setAttribute('disabled');
+    refs.formBtnRef.setAttribute('disabled');
   }
 });
 
@@ -46,57 +47,40 @@ const getImages = value => {
   });
 };
 
-form.addEventListener('submit', event => {
-  event.preventDefault();
+refs.formRef.addEventListener('submit', e => {
+  e.preventDefault();
 
   const anime = document.querySelector('canvas');
   anime.style.display = 'none';
 
-  gallery.innerHTML = '';
+  refs.galleryRef.innerHTML = '';
   pageCounter = 1;
   getImages(inputValue)
     .then(res => {
       const { hits, totalHits } = res.data;
       pagesCount = Math.ceil(totalHits / perPage);
       if (hits.length === 0) {
-        gallery.innerHTML = '';
+        refs.galleryRef.innerHTML = '';
         return Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.'
         );
       }
       Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
-      gallery.insertAdjacentHTML('beforeend', galleryMarkup(hits));
+      refs.galleryRef.insertAdjacentHTML('beforeend', galleryMarkup(hits));
       lightBox.refresh();
     })
     .catch(error => console.log(error));
 });
-
-const galleryMarkup = data => {
-  return data
-    .map(
-      photo => `<a href='${photo.largeImageURL}' class='gallery__link'>
-    <img class='gallery__image' src='${photo.webformatURL}' alt='${photo.tags}' loading='lazy' />
-    <div class='info'>
-      <p class='info-item likes'>${photo.likes}</p>
-      <p class='info-item views'>${photo.views}</p>
-      <p class='info-item comments'>${photo.comments}</p>
-      <p class='info-item downloads'>${photo.downloads}</p>
-    </div>
-    </a>
-  `
-    )
-    .join('');
-};
 
 const loadMoreHandler = () => {
   pageCounter++;
 
   getImages(inputValue).then(res => {
     const { hits } = res.data;
-    loading.classList.add('show');
-    gallery.insertAdjacentHTML('beforeend', galleryMarkup(hits));
+
+    refs.galleryRef.insertAdjacentHTML('beforeend', galleryMarkup(hits));
     lightBox.refresh();
-    loading.classList.remove('show');
+
     if (pagesCount === pageCounter) {
       return Notiflix.Notify.failure(
         `We're sorry, but you've reached the end of search results.`

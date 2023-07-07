@@ -1,3 +1,5 @@
+/* ----------------------Animation--------------------- */
+
 .body {
   margin: 0;
   padding: 0;
@@ -21,6 +23,13 @@ canvas {
   object-fit: contain;
 }
 
+/* -------------------------------------------------------- */
+
+:root {
+  --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  --animation-duration: 250ms;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -38,8 +47,7 @@ body {
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* background-color: #1f1f1f; */
-  /* color: #212121; */
+
   line-height: 1.5;
 }
 img {
@@ -47,91 +55,14 @@ img {
   max-width: 100%;
 }
 
-#search-form {
-  display: flex;
-  gap: 30px;
-  padding: 10px;
-  min-width: 50%;
-  height: 50px;
-  justify-content: center;
-  margin-bottom: 10px;
-  position: fixed;
-  background-color: rgba(55, 74, 81, 0.549);
-  border-radius: 28px;
-  z-index: 50;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-#search-form input {
-  /* display: flex; */
-  margin-right: 10px;
-  font: inherit;
-  font-size: larger;
-  text-align: center;
-  /* justify-content: center; */
-  padding: 4px;
-  max-width: 300px;
-  border-radius: 25px;
-  min-width: 300px;
-  height: 28px;
-  border: none;
-  box-shadow: 5px 5px 5px;
-  /* border-color: rgb(96, 160, 171); */
-  outline: none;
-}
-
-#search-form input:hover,
-#search-form input:focus {
-  outline: solid 2px rgb(196, 192, 9);
-}
-
-#search-form button {
-  border-radius: 25px;
-  background-color: rgb(196, 192, 9);
-  width: 120px;
-  height: 30px;
-  font-weight: 700;
-  box-shadow: 5px 5px 5px;
-
-  /* cursor: pointer; */
-}
-
-/* #search-form button:hover {
-  background-color: rgb(96, 160, 171);
-} */
-
-.loading {
-  display: none;
-  background-color: #c9c9c9;
-  width: 200px;
-  margin: 200px auto;
-  text-align: center;
-}
-
-.show {
-  display: block;
-}
-
-:root {
-  --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  --animation-duration: 250ms;
-}
-
 .gallery {
   background-color: transparent;
-  /* position: absolute; */
-  /* top: 0; */
-  /* left: 0; */
   margin: 85px auto 85px auto;
   display: grid;
-  /* overflow: scroll; */
-  /* max-width: 1140px; */
   width: 1140px;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-auto-rows: 220px;
-  grid-gap: 50px;
+  grid-gap: 20px;
   justify-content: center;
   cursor: pointer;
   scroll-behavior: smooth;
@@ -212,4 +143,52 @@ img {
 
 .gallery__link:hover {
   cursor: zoom-in;
+}
+
+#search-form {
+  display: flex;
+  gap: 30px;
+  padding: 10px;
+  min-width: 50%;
+  height: 50px;
+  justify-content: center;
+  margin-bottom: 10px;
+  position: fixed;
+  background-color: rgba(55, 74, 81, 0.549);
+  border-radius: 28px;
+  z-index: 50;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#search-form input {
+  margin-right: 10px;
+  font: inherit;
+  font-size: larger;
+  text-align: center;
+
+  padding: 4px;
+  max-width: 300px;
+  border-radius: 25px;
+  min-width: 300px;
+  height: 28px;
+  border: none;
+  box-shadow: 5px 5px 5px;
+  /* border-color: rgb(96, 160, 171); */
+  outline: none;
+}
+
+#search-form input:hover,
+#search-form input:focus {
+  outline: solid 2px rgb(196, 192, 9);
+}
+
+#search-form button {
+  border-radius: 25px;
+  background-color: rgb(196, 192, 9);
+  width: 120px;
+  height: 30px;
+  font-weight: 700;
+  box-shadow: 5px 5px 5px;
 }
