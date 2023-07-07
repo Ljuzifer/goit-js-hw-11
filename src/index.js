@@ -3,6 +3,7 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
 import _ from 'lodash';
+// import OnlyScroll from 'only-scrollbar';
 
 import { galleryMarkup } from './js/markup';
 import { refs } from './js/refs';
@@ -16,12 +17,15 @@ let pagesCount = 1;
 let inputValue = '';
 let perPage = 40;
 
+// const scroll = new OnlyScroll(document.querySelector('body'));
+// scroll.scrollContainer();
+
 const lightBox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 100,
 });
 
-refs.formInputRef.addEventListener('input', e => {
+refs.formInputRef.addEventListener('input', async e => {
   inputValue = e.target.value;
   if (inputValue.length > 0) {
     refs.formBtnRef.removeAttribute('disabled');

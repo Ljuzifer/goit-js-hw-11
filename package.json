@@ -22,6 +22,7 @@
     "lodash": "^4.17.21",
     "modern-normalize": "^1.1.0",
     "notiflix": "^3.2.6",
+    "only-scrollbar": "^1.0.3-beta",
     "simplelightbox": "^2.14.1"
   },
   "devDependencies": {
