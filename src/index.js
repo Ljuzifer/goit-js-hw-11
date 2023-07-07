@@ -31,8 +31,8 @@ refs.formInputRef.addEventListener('input', e => {
   }
 });
 
-const getImages = value => {
-  return axios.get(`${BASE_URL}`, {
+const getImages = async value => {
+  const imageThumb = await axios.get(`${BASE_URL}`, {
     params: {
       key: API_KEY,
       q: value,
@@ -43,6 +43,7 @@ const getImages = value => {
       per_page: perPage,
     },
   });
+  return imageThumb;
 };
 
 refs.formRef.addEventListener('submit', e => {
