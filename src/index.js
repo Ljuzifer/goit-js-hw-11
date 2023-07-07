@@ -8,6 +8,9 @@ import { galleryMarkup } from './js/markup';
 import { refs } from './js/refs';
 import { handleHideAnime } from './js/anime';
 
+BASE_URL = 'https://pixabay.com/api/';
+API_KEY = '38110129-67a9a84d818f0afdbf48a1e7d';
+
 let pageCounter = 1;
 let pagesCount = 1;
 let inputValue = '';
@@ -15,7 +18,7 @@ let perPage = 40;
 
 const lightBox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
-  captionDelay: 200,
+  captionDelay: 100,
 });
 
 refs.formInputRef.addEventListener('input', e => {
@@ -29,9 +32,9 @@ refs.formInputRef.addEventListener('input', e => {
 });
 
 const getImages = value => {
-  return axios.get('https://pixabay.com/api/', {
+  return axios.get(`${BASE_URL}`, {
     params: {
-      key: '38110129-67a9a84d818f0afdbf48a1e7d',
+      key: API_KEY,
       q: value,
       image_type: 'photo',
       orientation: 'horizontal',
