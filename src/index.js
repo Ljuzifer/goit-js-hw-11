@@ -10,7 +10,7 @@ import _ from 'lodash';
 
 import { galleryMarkup } from './js/markup';
 import { refs } from './js/refs';
-import { handleHideAnime } from './js/anime';
+import { handleHideAnime, handleStartAnime } from './js/anime';
 
 const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '38110129-67a9a84d818f0afdbf48a1e7d';
@@ -39,7 +39,7 @@ refs.formInputRef.addEventListener('keydown', e => {
 });
 
 refs.formInputRef.addEventListener('input', async e => {
-  inputEl = e.target.value.trim();
+  const inputEl = e.target.value.trim();
   if (inputEl.length === 0) {
     refs.formBtnRef.setAttribute('disabled', 'disabled');
   } else if (inputEl.length > 0) {
@@ -77,6 +77,7 @@ refs.formRef.addEventListener('submit', async e => {
       const { hits, totalHits } = res.data;
       pagesCount = Math.ceil(totalHits / perPage);
       if (hits.length === 0) {
+        handleStartAnime();
         refs.galleryRef.innerHTML = '';
         return Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.',

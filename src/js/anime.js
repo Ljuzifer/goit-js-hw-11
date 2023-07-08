@@ -315,3 +315,8 @@ export function handleHideAnime() {
   const anime = document.querySelector('canvas');
   anime.style.display = 'none';
 }
+
+export function handleStartAnime() {
+  const anime = document.querySelector('canvas');
+  anime.style.display = 'block';
+}
