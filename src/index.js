@@ -67,7 +67,7 @@ const getImages = async value => {
 
 refs.formRef.addEventListener('submit', async e => {
   e.preventDefault();
-  handleHideAnime();
+  // handleHideAnime();
 
   refs.galleryRef.innerHTML = '';
   pageCounter = 1;
@@ -77,13 +77,14 @@ refs.formRef.addEventListener('submit', async e => {
       const { hits, totalHits } = res.data;
       pagesCount = Math.ceil(totalHits / perPage);
       if (hits.length === 0) {
-        handleStartAnime();
+        // handleStartAnime();
         refs.galleryRef.innerHTML = '';
         return Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.',
           options
         );
       } else if (pagesCount === pageCounter) {
+        handleHideAnime();
         refs.galleryRef.innerHTML = '';
         Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
         refs.galleryRef.insertAdjacentHTML('beforeend', galleryMarkup(hits));
@@ -93,12 +94,14 @@ refs.formRef.addEventListener('submit', async e => {
           options
         );
       }
+      handleHideAnime();
       refs.galleryRef.insertAdjacentHTML('beforeend', galleryMarkup(hits));
       lightBox.refresh();
       return Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
     })
     .catch(error => {
       console.log(error.code);
+      handleStartAnime();
       return Notiflix.Notify.failure(
         'Oops, something went wrong! ' + `Error is ${error.message}`
       );
