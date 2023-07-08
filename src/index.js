@@ -5,6 +5,9 @@ import Notiflix from 'notiflix';
 import _ from 'lodash';
 // import OnlyScroll from 'only-scrollbar';
 
+// const scroll = new OnlyScroll(document.querySelector('body'));
+// scroll.scrollContainer();
+
 import { galleryMarkup } from './js/markup';
 import { refs } from './js/refs';
 import { handleHideAnime } from './js/anime';
@@ -17,22 +20,34 @@ let pagesCount = 1;
 let inputValue = '';
 let perPage = 40;
 
-// const scroll = new OnlyScroll(document.querySelector('body'));
-// scroll.scrollContainer();
+const options = {
+  timeout: 8000,
+};
 
 const lightBox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 100,
 });
 
+refs.formInputRef.addEventListener('keydown', e => {
+  if (refs.formBtnRef.hasAttribute('disabled') && e.code === 'Space') {
+    e.target.value = '';
+    return Notiflix.Notify.failure(
+      `Sorry, but don't start with ${e.code}-key and enter valid word! ;)`
+    );
+  }
+});
+
 refs.formInputRef.addEventListener('input', async e => {
-  inputValue = e.target.value;
-  if (inputValue.length > 0) {
+  inputEl = e.target.value.trim();
+  if (inputEl.length === 0) {
+    refs.formBtnRef.setAttribute('disabled', 'disabled');
+  } else if (inputEl.length > 0) {
     refs.formBtnRef.removeAttribute('disabled');
     refs.formBtnRef.style.cursor = 'pointer';
-  } else {
-    refs.formBtnRef.setAttribute('disabled');
   }
+
+  return;
 });
 
 const getImages = async value => {
@@ -47,6 +62,7 @@ const getImages = async value => {
       per_page: perPage,
     },
   });
+  console.log(imageThumb);
   return imageThumb;
 };
 
@@ -56,6 +72,7 @@ refs.formRef.addEventListener('submit', async e => {
 
   refs.galleryRef.innerHTML = '';
   pageCounter = 1;
+  inputValue = refs.formInputRef.value.trim();
   await getImages(inputValue)
     .then(res => {
       const { hits, totalHits } = res.data;
@@ -63,14 +80,29 @@ refs.formRef.addEventListener('submit', async e => {
       if (hits.length === 0) {
         refs.galleryRef.innerHTML = '';
         return Notiflix.Notify.failure(
-          'Sorry, there are no images matching your search query. Please try again.'
+          'Sorry, there are no images matching your search query. Please try again.',
+          options
+        );
+      } else if (pagesCount === pageCounter) {
+        refs.galleryRef.innerHTML = '';
+        Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
+        refs.galleryRef.insertAdjacentHTML('beforeend', galleryMarkup(hits));
+        lightBox.refresh();
+        return Notiflix.Notify.failure(
+          `We're sorry, but you've reached the end of search results.`,
+          options
         );
       }
-      Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
       refs.galleryRef.insertAdjacentHTML('beforeend', galleryMarkup(hits));
       lightBox.refresh();
+      return Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
     })
-    .catch(error => console.log(error));
+    .catch(error => {
+      console.log(error.code);
+      return Notiflix.Notify.failure(
+        'Oops, something went wrong! ' + `Error is ${error.message}`
+      );
+    });
 });
 
 const loadMoreHandler = () => {
