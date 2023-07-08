@@ -61,7 +61,7 @@ const getImages = async value => {
       per_page: perPage,
     },
   });
-  console.log(imageThumb);
+
   return imageThumb;
 };
 
