@@ -33,7 +33,7 @@ refs.formInputRef.addEventListener('keydown', e => {
   if (refs.formBtnRef.hasAttribute('disabled') && e.code === 'Space') {
     e.target.value = '';
     return Notiflix.Notify.failure(
-      `Sorry, but don't start with ${e.code}-key and enter valid word! ;)`
+      `Sorry, but don't start with '${e.code}'-key and enter valid word! ;)`
     );
   }
 });
@@ -46,7 +46,6 @@ refs.formInputRef.addEventListener('input', async e => {
     refs.formBtnRef.removeAttribute('disabled');
     refs.formBtnRef.style.cursor = 'pointer';
   }
-
   return;
 });
 
