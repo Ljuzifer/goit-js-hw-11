@@ -38,7 +38,7 @@ refs.formInputRef.addEventListener('keydown', e => {
   }
 });
 
-refs.formInputRef.addEventListener('input', async e => {
+refs.formInputRef.addEventListener('input', e => {
   const inputEl = e.target.value.trim();
   if (inputEl.length === 0) {
     refs.formBtnRef.setAttribute('disabled', 'disabled');
